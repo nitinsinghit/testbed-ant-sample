@@ -4,16 +4,12 @@ pipeline {
         stage("Build") {
             steps {
                 echo "Building application..."   
-                bat "%ANT_HOME%/bin/ant.bat clean compile"
             }
         }
         stage("Unit Tests") {
             steps {
                 echo "Unit tests (JUnit)..."
                 echo "Mutation tests (pitest)..."
-
-                bat "%ANT_HOME%/bin/ant.bat run-unit-tests"
-                bat "%ANT_HOME%/bin/ant.bat run-mutation-tests"
             }
         }
         stage("Functional Test") {
@@ -29,7 +25,6 @@ pipeline {
         stage("Quality Analysis") {
             steps {
                 echo "Running SonarQube..."
-            bat "%ANT_HOME%/bin/ant.bat run-sonarqube-analysis"
             }
         }
         stage("Security Assessment") {
@@ -48,9 +43,5 @@ pipeline {
             }
         }
     }
-    post {
-        always {
-        junit '/test/reports/*.xml'
-            }
-    }       
+         
 }
